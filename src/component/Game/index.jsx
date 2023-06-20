@@ -4,8 +4,8 @@ import GameHistory from "../GameHistory/index.jsx";
 
 function Game() {
 
-    //Définition de la valeur state initial de l'historique de notre application
-    //On utilise une constante a part pour le définir afin d'évité les répétitions lorsqu'on en aura besoin de nouveau
+    //Définition de la valeur state initiale de l'historique de notre application
+    //On utilise une constante à part pour le définir afin d'éviter les répétitions lorsqu'on en aura besoin de nouveau
     const initialState = [Array(9).fill('')]
     //Définition du state de l'historique notre application au démarrage
     const [squaresHistory, setSquaresHistory] = useState(initialState)
@@ -14,7 +14,7 @@ function Game() {
     //"Tranche" de notre historique à afficher
     const squares =  squaresHistory[selectedMove]
     //Ici on calcule le joueur du prochain tour en fonction du tour actuel
-    //Comme sa valeur dépend de la valeur d'un state "selectedMove" elle sera recalculé à chaque fois
+    //Comme sa valeur dépend de la valeur d'un state "selectedMove" elle sera recalculée à chaque fois
     // que cette dernière change.
     const player = selectedMove % 2 !== 0
     const [message, setMessage] = useState('First player : O')
@@ -37,7 +37,7 @@ function Game() {
             newSquares[index] = "O"
         }
 
-        //On cherche à savoir si le clique à lieu alors qu'on se trouve dans l'historique de la partie ou pas
+        //On cherche à savoir si le clique a lieu alors qu'on se trouve dans l'historique de la partie ou pas
         if(selectedMove && selectedMove !== squaresHistory.length){
             //si oui on récupère l'historique du début de la partie jusqu'au mouvement afficher afin d'écraser
             //ce qu'il se trouve ensuite et de le remplacer par le nouveau mouvement
