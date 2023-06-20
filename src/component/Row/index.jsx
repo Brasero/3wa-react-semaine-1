@@ -5,7 +5,7 @@ function Row({rowNumber, values, click}) {
 
 
     return (
-        <div className={'row'}>
+        <div className={'row'} style={{display: 'flex'}}>
             <Square
                 position={(rowNumber * 3) + 1 }
                 value={values[((rowNumber * 3) + 1) - 1]}
