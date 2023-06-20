@@ -1,37 +1,56 @@
-import Row from "../Row/index.jsx";
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
+import Board from "../Board/index.jsx";
+import GameHistory from "../GameHistory/index.jsx";
 
 function Game() {
 
-    const [squares, setSquares] = useState(Array(9).fill(''))
-    const [player, setPlayer] = useState(false)
+
+    const initialState = [Array(9).fill('')]
+    const [squaresHistory, setSquaresHistory] = useState(initialState)
+    const [selectedMove, setSelectedMove] = useState(0)
+    const squares =  squaresHistory[selectedMove]
+    const player = selectedMove % 2 !== 0
     const [message, setMessage] = useState('First player : O')
 
     const onClick = (index) => {
-        const newSquares = squares
+        const newSquares = squares.slice()
 
         if(squares[index] !== '' || winner(squares)) {
             return
         }
-
         if(player) {
             newSquares[index] = "X"
         } else {
             newSquares[index] = "O"
         }
 
-        setPlayer(!player)
-        setSquares({
-            ...newSquares
-        })
+        if(selectedMove && selectedMove !== squaresHistory.length){
+            const newHistory = squaresHistory.slice(0, selectedMove + 1)
+            setSquaresHistory([
+                ...newHistory,
+                newSquares
+            ])
+        } else {
+            setSquaresHistory([
+                ...squaresHistory,
+                newSquares
+            ])
+        }
 
-        const theWinner = winner(newSquares)
+
+        setSelectedMove(selectedMove + 1)
+    }
+
+    useEffect(() => {
+        const theWinner = winner(squares)
         if(theWinner) {
             setMessage(`The winner is : ${theWinner}`)
+        } else if(squares.includes('')) {
+            setMessage(`Next player is : ${player ? 'X' : 'O'}`)
         } else {
-            setMessage(`Next player is : ${player ? 'O' : 'X'}`)
+            setMessage("The game is null no one wins")
         }
-    }
+    }, [selectedMove])
 
     const winner = (squares) => {
         const winLines = [
@@ -53,14 +72,31 @@ function Game() {
         return null
     }
 
+    const jumpTo = (index) => {
+        if(index === 0) {
+            setSquaresHistory(initialState)
+        }
+        setSelectedMove(index)
+    }
+
     return (
         <>
-            {message}
-            <div className={'game'}>
-                <Row rowNumber={0} values={squares} click={onClick} />
-                <Row rowNumber={1} values={squares} click={onClick} />
-                <Row rowNumber={2} values={squares} click={onClick} />
+            <div className={'gameContainer'}>
+                <div className={'gameHeader'}>
+                    {message}
+                </div>
+                <div className={'gameContainer__block'} style={{display: 'flex'}}>
+                    <div className={"boardContainer"}>
+                        <Board squares={squares} click={onClick}/>
+                    </div>
+                    <div className={'historyContainer'}>
+                        <GameHistory history={squaresHistory} click={jumpTo} />
+                    </div>
+                </div>
             </div>
+
+
+
         </>
     )
 }
