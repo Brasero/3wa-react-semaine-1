@@ -38,6 +38,7 @@ function Chrono({step, limit = 20}) {
         if(chrono >= limit) {
             stop()
         }
+
     }, [chrono])
 
     return (
