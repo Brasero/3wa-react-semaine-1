@@ -23,7 +23,7 @@ function Game() {
     //Une reference sera passée en tant que props à Square afin que ce dernier puisse s'en servir.
     const onClick = (index) => {
         //On crée une copie du tableau squares afin de pouvoir le manipuler en respectant le principe d'immutabilité
-        const newSquares = squares.slice() // equivalent à la notation [...squares]
+        const newSquares = squares.slice() // le résultat est equivalent à la notation [...squares]
 
         //On vérifie que la partie n'est pas déjà terminée et que la case cliqué est bien vide
         //Si ce n'est pas le cas la fonction s'arrête là.
