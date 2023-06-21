@@ -1,80 +1,36 @@
 import './App.css'
 import Input from "./component/Input/index.jsx";
 import CalcButton from "./component/CalcButton/index.jsx";
-import {useEffect, useState} from "react";
+import {useEffect, useState, useReducer} from "react";
+import reducer, {initialState} from "./reducer/index.jsx";
 
 function App() {
 
-    const normalize = (num) => parseFloat(num.replace(',', '.'))
+    const [state, dispatch] = useReducer(reducer, initialState)
 
-    const initialState = {
-        number1: '',
-        number2: ''
-    }
 
-    const [values, setValues] = useState(initialState)
-
-    const [resultat, setResultat] = useState(0)
-    const [error, setError] = useState('')
-    const [count, setCount] = useState(0)
-    const [message, setMessage] = useState('')
-
+    const {values, count, message, error, resultat} = state
+    const {number1, number2} = values
     const changeValue = (event) => {
         const {value, name} = event.target
-        const state = {...values}
-        //if(name === 'number1') state.number1 = value
-        //if(name === 'number2') state.number2 = value
-        state[name] = value
-
-        setValues(state)
-    }
-
-    const isNumerique = () => {
-        if(isNaN(normalize(values.number1)) || isNaN(normalize(values.number2))) {
-            setError('Merci de bien saisir des valeurs numérique.')
-            return false
-        }
-        return true
-    }
-
-    const addition = () => {
-        if(!isNumerique()) {
-            return
-        }
-        const res = normalize(values.number1) + normalize(values.number2)
-        setResultat(res)
-        setError('')
-    }
-
-    const multiply = () => {
-        if(!isNumerique()) {
-            return
-        }
-        const res = normalize(values.number1) * normalize(values.number2)
-        setResultat(res)
-        setError('')
-    }
-
-    const reset = () => {
-        setResultat(0)
-        setValues(initialState)
+        const payload = {name, value}
+        dispatch({type: 'changeValue', payload})
     }
 
     useEffect(() => {
-        if(resultat !== 0) {
+        if(state.resultat !== 0) {
 
             if(count >= 10) {
-                setMessage('Vous avez effectué 10 calculs')
-                setCount(0)
+                dispatch({type: 'setMessage', payload: 'Vous avez fait 10 calcul'})
+                console.log(count, message)
             } else {
-                setCount(count + 1)
-                setMessage('')
+                dispatch({type: 'setCount'})
             }
 
 
         }
 
-    }, [resultat])
+    }, [state.resultat])
 
     return (
         <>
@@ -88,16 +44,16 @@ function App() {
                 {resultat}
             </div>
             <div style={{display: 'flex'}}>
-                <Input value={values.number1} name={'number1'} changeValue={changeValue}/>
-                <Input value={values.number2} name={'number2'} changeValue={changeValue} />
+                <Input value={number1} name={'number1'} changeValue={changeValue}/>
+                <Input value={number2} name={'number2'} changeValue={changeValue} />
             </div>
             {
                 error !== '' && <div style={{color: 'red'}}>{error}</div>
             }
             <div style={{display: 'flex'}}>
-                <CalcButton value={'+'} click={addition} />
-                <CalcButton value={'x'} click={multiply} />
-                <CalcButton value={'reset'} click={reset} />
+                <CalcButton value={'+'} click={() => dispatch({type: 'addition'})} />
+                <CalcButton value={'x'} click={() => dispatch({type: 'multiply'})} />
+                <CalcButton value={'reset'} click={() => dispatch({type: 'reset'})} />
             </div>
         </>
     )
