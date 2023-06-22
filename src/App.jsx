@@ -8,12 +8,6 @@ function App() {
 
     return (
         <>
-            <div>
-                <Input />
-            </div>
-            <div >
-                <List />
-            </div>
         </>
     )
 }
