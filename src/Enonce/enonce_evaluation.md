@@ -6,7 +6,7 @@ Le projet consiste à créer une application de gestion des dépenses personnell
 ### Fonctionnalités principales
 1. Ajout d'une dépense avec un montant et une catégorie.
 2. Affichage de la liste des dépenses enregistrées avec les détails correspondants.
-3. Calcul du total des dépenses total et detail en fonction des categories.
+3. Calcul du total des dépenses et detail en fonction des categories.
 
 ### Exigences techniques
 - Utiliser React.js comme framework de développement.
@@ -18,7 +18,7 @@ Le projet consiste à créer une application de gestion des dépenses personnell
 ### Points de notation
 - Ajout d'une dépense (4 points) : L'utilisateur peut ajouter une dépense avec un montant et une catégorie.
 - Affichage des dépenses (3 points) : Les dépenses enregistrées sont affichées avec leurs détails correspondants.
-- Calcul du total des dépenses total et par catégorie (5 points) : Le total des dépenses mensuelles est calculé et affiché.
+- Calcul du total des dépenses et par catégorie (5 points) : Le total des dépenses mensuelles est calculé et affiché.
 - Interface utilisateur conviviale et attrayante (3 points) : L'application possède une interface utilisateur intuitive, esthétique et facile à utiliser.
 
 ### Liste de catégories
