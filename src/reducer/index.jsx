@@ -7,15 +7,25 @@ export const initialState = {
 
 let current;
 
+function calc(state) {
+    const current = parseFloat(state.currentNumber)
+    const prev = parseFloat(state.prevNumber)
+    return state.lastAction === '' ? current :
+        state.lastAction === '+' ?
+            prev + current :
+            state.lastAction === '-' ?
+                prev - current :
+                state.lastAction === '*' ?
+                    prev * current :
+                    prev / current
+}
+
 const reducer = (state, action) => {
     switch(action.type) {
 
         case 'addition':
 
-            current = state.lastAction === '' ? state.currentNumber :
-                state.lastAction === '+' ?
-                    state.prevNumber + state.currentNumber :
-                    state.prevNumber * state.currentNumber
+            current = calc(state)
 
             return {
                 prevNumber: current,
@@ -23,11 +33,17 @@ const reducer = (state, action) => {
                 lastAction: '+'
             }
 
+        case 'soustract':
+            current = calc(state)
+
+            return {
+                prevNumber: current,
+                currentNumber: 0,
+                lastAction: '-'
+            }
+
         case 'multiply':
-            current = state.lastAction === '' ? state.currentNumber :
-                state.lastAction === '+' ?
-                    state.prevNumber + state.currentNumber :
-                    state.prevNumber * state.currentNumber
+            current = calc(state)
 
             return {
                 prevNumber: current,
@@ -35,11 +51,17 @@ const reducer = (state, action) => {
                 lastAction: '*'
             }
 
+        case 'divide':
+            current = calc(state)
+
+            return {
+                prevNumber: current,
+                currentNumber: 0,
+                lastAction: '/'
+            }
+
         case 'equal':
-            current = state.lastAction === '' ? state.currentNumber :
-                state.lastAction === '+' ?
-                    state.prevNumber + state.currentNumber :
-                    state.prevNumber * state.currentNumber
+            current = calc(state)
 
             return {
                 prevNumber: 0,
@@ -53,7 +75,11 @@ const reducer = (state, action) => {
         case 'changeCurrent':
             return {
                 ...state,
-                currentNumber: parseInt(state.currentNumber.toString() + action.payload)
+                currentNumber: state.currentNumber === 0 ?
+                        action.payload.toString() === '.' ?
+                           state.currentNumber.toString() + action.payload.toString() :
+                            action.payload.toString() :
+                    state.currentNumber.toString() + action.payload.toString()
             }
 
 
