@@ -1,0 +1,7 @@
+.calcButton {
+    margin-left: 5px;
+    display: flex;
+    flex-direction: column;
+    width: 90px;
+    gap: 5px;
+}

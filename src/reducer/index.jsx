@@ -1,79 +1,59 @@
 
 export const initialState = {
-    values: {
-        number1: '',
-        number2: ''
-    },
-    message: '',
-    error: '',
-    count: 0,
-    resultat: 0
+    prevNumber: 0,
+    currentNumber: 0,
+    lastAction: ''
 }
-const normalize = (num) => num.replace(',', '.')
 
-const isNumerique = (values) => {
-    if(isNaN(normalize(values.number1)) || isNaN(normalize(values.number2))) {
-        return false
-    }
-    return true
-}
+let current;
 
 const reducer = (state, action) => {
     switch(action.type) {
 
         case 'addition':
-            return isNumerique(state.values) ? {
-                ...state,
-                error: '',
-                resultat: parseFloat(normalize(state.values.number1)) + parseFloat(normalize(state.values.number2))
-            } : {
-                ...state,
-                error: 'Merci de bien saisir des valeurs numérique.'
+
+            current = state.lastAction === '' ? state.currentNumber :
+                state.lastAction === '+' ?
+                    state.prevNumber + state.currentNumber :
+                    state.prevNumber * state.currentNumber
+
+            return {
+                prevNumber: current,
+                currentNumber: 0,
+                lastAction: '+'
             }
 
         case 'multiply':
-            return isNumerique(state.values) ? {
-                ...state,
-                error: '',
-                resultat: parseFloat(normalize(state.values.number1)) * parseFloat(normalize(state.values.number2))
-            } : {
-                ...state,
-                error: 'Merci de bien saisir des valeurs numérique.'
+            current = state.lastAction === '' ? state.currentNumber :
+                state.lastAction === '+' ?
+                    state.prevNumber + state.currentNumber :
+                    state.prevNumber * state.currentNumber
+
+            return {
+                prevNumber: current,
+                currentNumber: 0,
+                lastAction: '*'
+            }
+
+        case 'equal':
+            current = state.lastAction === '' ? state.currentNumber :
+                state.lastAction === '+' ?
+                    state.prevNumber + state.currentNumber :
+                    state.prevNumber * state.currentNumber
+
+            return {
+                prevNumber: 0,
+                currentNumber: current,
+                lastAction: ''
             }
 
         case 'reset':
-            return {
-                ...state,
-                values: {
-                    number1: '',
-                    number2: ''
-                },
-                resultat: 0,
-                message: '',
-                error: ''
-            }
+            return initialState
 
-        case 'changeValue':
+        case 'changeCurrent':
             return {
                 ...state,
-                values: {
-                    ...state.values,
-                    [action.payload.name]: action.payload.value
-                }
-            }
-
-        case 'setMessage':
-            return {
-                ...state,
-                message: action.payload,
-                count: 0
-            }
-
-        case 'setCount':
-            return {
-                ...state,
-                count: state.count + 1,
-                message: ''
+                currentNumber: parseInt(state.currentNumber.toString() + action.payload)
             }
 
 
