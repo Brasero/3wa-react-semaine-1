@@ -1,7 +1,11 @@
 import './calcButton.css'
+import {useContext} from "react";
+import {CalculatorContext} from "../../utils/context/CalculatorContext.jsx";
 
 
-function CalcButtons({dispatch}) {
+function CalcButtons() {
+
+    const [state, dispatch] = useContext(CalculatorContext)
 
     return (
         <div className={'calcButton'}>

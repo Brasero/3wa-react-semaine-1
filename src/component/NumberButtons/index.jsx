@@ -1,7 +1,10 @@
-
 import './button.css'
+import {useContext} from "react";
+import {CalculatorContext} from "../../utils/context/CalculatorContext.jsx";
 
-function NumberButtons({dispatch}) {
+function NumberButtons() {
+
+    const [state, dispatch] = useContext(CalculatorContext)
 
     const numbers = ['.',0,1,2,3,4,5,6,7,8,9]
     numbers.reverse()
