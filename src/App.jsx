@@ -1,15 +1,20 @@
 import './App.css'
-import Calculatrice from "./component/Calculatrice/index.jsx";
-import CalculatorContextProvider from "./utils/context/CalculatorContext";
+import Input from "./component/Input/index.jsx";
+import List from "./component/List/index.jsx";
 
 
 function App() {
 
 
     return (
-        <CalculatorContextProvider>
-            <Calculatrice />
-        </CalculatorContextProvider>
+        <>
+            <div >
+                <List />
+            </div>
+            <div>
+                <Input />
+            </div>
+        </>
     )
 }
 

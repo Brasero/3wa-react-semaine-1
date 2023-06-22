@@ -1,87 +1,37 @@
 
 export const initialState = {
-    prevNumber: 0,
-    currentNumber: 0,
-    lastAction: ''
+    items: [
+        'premier item générer'
+    ],
+    value: ''
 }
 
-let current;
-
-function calc(state) {
-    const current = parseFloat(state.currentNumber)
-    const prev = parseFloat(state.prevNumber)
-    return state.lastAction === '' ? current :
-        state.lastAction === '+' ?
-            prev + current :
-            state.lastAction === '-' ?
-                prev - current :
-                state.lastAction === '*' ?
-                    prev * current :
-                    prev / current
-}
 
 const reducer = (state, action) => {
     switch(action.type) {
 
-        case 'addition':
-
-            current = calc(state)
-
+        case 'addItem':
+            const items = [...state.items]
+            items.push(state.value)
             return {
-                prevNumber: current,
-                currentNumber: 0,
-                lastAction: '+'
+                value: '',
+                items
             }
 
-        case 'soustract':
-            current = calc(state)
-
-            return {
-                prevNumber: current,
-                currentNumber: 0,
-                lastAction: '-'
-            }
-
-        case 'multiply':
-            current = calc(state)
-
-            return {
-                prevNumber: current,
-                currentNumber: 0,
-                lastAction: '*'
-            }
-
-        case 'divide':
-            current = calc(state)
-
-            return {
-                prevNumber: current,
-                currentNumber: 0,
-                lastAction: '/'
-            }
-
-        case 'equal':
-            current = calc(state)
-
-            return {
-                prevNumber: 0,
-                currentNumber: current,
-                lastAction: ''
-            }
-
-        case 'reset':
-            return initialState
-
-        case 'changeCurrent':
+        case 'changeValue':
             return {
                 ...state,
-                currentNumber: state.currentNumber === 0 ?
-                        action.payload.toString() === '.' ?
-                           state.currentNumber.toString() + action.payload.toString() :
-                            action.payload.toString() :
-                    state.currentNumber.toString() + action.payload.toString()
+                value: action.payload
             }
 
+        case 'removeItem':
+            const newItems = state.items.filter((item) => item !== action.payload)
+
+            return {
+                ...state,
+                items: newItems
+
+            }
 
         default:
             return state
