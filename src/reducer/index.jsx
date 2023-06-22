@@ -1,9 +1,12 @@
+const item = {
+    text: '',
+    color: 'palevioletred',
+    size: '15px'
+}
 
 export const initialState = {
-    items: [
-        'premier item générer'
-    ],
-    value: ''
+    items: [],
+    item
 }
 
 
@@ -12,16 +15,37 @@ const reducer = (state, action) => {
 
         case 'addItem':
             const items = [...state.items]
-            items.push(state.value)
+            items.push(state.item)
             return {
-                value: '',
+                item,
                 items
             }
 
         case 'changeValue':
             return {
                 ...state,
-                value: action.payload
+                item: {
+                    ...state.item,
+                    text: action.payload
+                }
+            }
+
+        case 'changeColor':
+            return {
+                ...state,
+                item: {
+                    ...state.item,
+                    color: action.payload
+                }
+            }
+
+        case "changeSize":
+            return {
+                ...state,
+                item: {
+                    ...state.item,
+                    size: action.payload
+                }
             }
 
         case 'removeItem':

@@ -8,11 +8,11 @@ function App() {
 
     return (
         <>
-            <div >
-                <List />
-            </div>
             <div>
                 <Input />
+            </div>
+            <div >
+                <List />
             </div>
         </>
     )

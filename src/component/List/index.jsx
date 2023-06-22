@@ -1,3 +1,4 @@
+import './list.css'
 import Item from "./Item/index.jsx";
 import {useContext} from "react";
 import {ListContext} from "../../utils/context/ListContext.jsx";
