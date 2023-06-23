@@ -50,7 +50,8 @@ const reducer = (state = initialState, action) => {
             const newOutgoings = [...state.outgoings]
             const outgoing = {...state.outgoing, amount: normalizeNumber(state.outgoing.amount)}
             newOutgoings.push(outgoing)
-            return {
+            return isNaN(outgoing.amount) || outgoing.detail === '' ? state :
+             {
                 ...state,
                 outgoings: newOutgoings,
                 outgoing: initialOutgoing
