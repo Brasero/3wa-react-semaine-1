@@ -1,0 +1,12 @@
+li {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+span:nth-child(1) {
+    color: #646cff;
+}
+
+span:nth-child(3) {
+    color: palevioletred;
+}

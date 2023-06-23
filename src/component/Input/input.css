@@ -1,0 +1,72 @@
+.input__container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 5px;
+}
+
+.text__inputs {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-end;
+    gap: 5px;
+    height: 100%;
+}
+
+.input__label {
+    position: relative;
+}
+
+.input__label > span {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    transition: all .2s ease-in-out;
+    padding: 0 5px;
+}
+
+.input:focus-visible + span, .input:not(:placeholder-shown) + span {
+    transform: translateY(-163%);
+    background: #3B3B3B;
+    border-left: 3px solid #646cff;
+    border-top: 3px solid #646cff;
+    border-right: 3px solid #646cff;
+    border-bottom: #242424;
+    border-radius: 5px 5px 0  0;
+}
+
+
+.input:focus-visible {
+    outline: 3px solid #646cff;
+}
+
+
+.input {
+    height: 30px;
+}
+
+.input::placeholder {
+    opacity: 0;
+}
+
+.validate__button {
+    width : 150px;
+    height: 35px;
+    padding: 0;
+}
+
+.categorie__container {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 5px;
+    width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+    .input__container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
